@@ -1,0 +1,90 @@
+
+{% extends "lanwell_new/index.html" %}
+
+{% load bootstrap3 %}
+
+{% block completed %}
+
+<hr class="intro-divider">
+
+    <h1 align="center">Выполненные проекты</h1>
+    <div class="container">
+        <div class="text-center">
+    <div class="button-group btn-group btn-group-lg filter-button-group">
+        <button type="button" class="btn btn-default is-checked" data-filter="*">Показать все</button>
+         {% for tag in tags %}
+             <button type="button" class="btn btn-default" data-filter=".{{ tag.name }}">{{ tag.display_name }}</button>
+         {% endfor %}
+    </div>
+        </div>
+    <div class="grid">
+        {% for project in completed %}
+            <div class="grid-item {{ project.tags_list}}">
+            <div><H1>{{ project.name }}</H1></div>
+
+            <div>{{ project.description }}</div>
+            <hr class="section-heading-spacer">
+            <img src="{{ project.image.url }}"/>
+            </div>
+        {% endfor %}
+
+
+
+
+    </div>
+
+
+    </div>
+
+
+    <script type="javascript">
+
+
+    </script>
+{% endblock %}
+
+
+
+{% block modal %}
+
+
+    <!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Напишите нам</h4>
+      </div>
+      <div class="modal-body">
+
+          <form id="customer-request" action="/" method="post">
+            {% csrf_token %}
+
+              {% bootstrap_form form  %}
+              {% buttons submit="Написать нам" %}
+{#             <input type="submit" class="btn btn-success" value="Написать нам" />#}
+              {% endbuttons %}
+          </form>
+
+      </div>
+{#      <div class="modal-footer">#}
+{#        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+{#        <button type="button" class="btn btn-primary">Save changes</button>#}
+{#      </div>#}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block onload %}
+     $('.filter-button-group').on('click', 'button', function () {
+            var filterValue = $(this).attr('data-filter');
+            $grid.isotope({ filter: filterValue });
+        });
+
+    $('#customer-request').ajaxForm(function() {
+                alert("Спасибо, мы перезвоним");
+                $('#myModal').modal('hide');
+            });
+{% endblock %}
