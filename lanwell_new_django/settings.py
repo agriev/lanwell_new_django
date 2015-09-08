@@ -107,7 +107,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = './static/'
 
 MEDIA_ROOT = './media/'
-MEDIA_URL = '/media/'
+MEDIA_URL = '/mediapics/'
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,  'templates'),
